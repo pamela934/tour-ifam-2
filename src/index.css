@@ -1,0 +1,720 @@
+/* ─── Google Font: Open Sans (mesmo do RF-23) ─────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
+
+/* ─── Reset mínimo ────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── Variáveis IFAM — Manual da Marca IF 2015 ────────────────────────── */
+:root {
+  --ifam-green:       #2f9e41;   /* verde institucional */
+  --ifam-green-dark:  #1a5c2a;   /* verde escuro (gradiente) */
+  --ifam-green-mid:   #2d8a3e;
+  --ifam-green-light: #e8f5e9;   /* fundo suave */
+  --ifam-red:         #cd191e;   /* vermelho institucional (bandeira) */
+
+  --primary:          #2f9e41;
+  --primary-dark:     #257a34;
+  --primary-fg:       #ffffff;
+
+  --surface:          #ffffff;
+  --surface-2:        #f9fafb;
+  --border:           #e0e0e0;
+  --muted:            #6b7280;
+  --text:             #111827;
+
+  --radius:           8px;
+  --shadow-sm:        0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:        0 4px 16px rgba(0,0,0,.12);
+}
+
+/* ─── Base ────────────────────────────────────────────────────────────── */
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: var(--surface-2);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────── */
+.ifam-header {
+  width: 100%;
+  background: #fff;
+  border-bottom: 4px solid var(--ifam-green);
+  box-shadow: var(--shadow-sm);
+}
+.ifam-header__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.ifam-header__logo {
+  height: 56px;
+  width: auto;
+  user-select: none;
+  flex-shrink: 0;
+}
+.ifam-header__divider {
+  border-left: 2px solid var(--ifam-green);
+  padding-left: 20px;
+}
+.ifam-header__institute {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--ifam-green);
+}
+.ifam-header__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────── */
+.ifam-footer {
+  width: 100%;
+  background: var(--ifam-green);
+  padding: 10px 24px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,.8);
+}
+
+/* ─── Layout ─────────────────────────────────────────────────────────── */
+.ifam-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-2);
+}
+.ifam-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ─── Título de página ────────────────────────────────────────────────── */
+.page-heading { margin-bottom: 24px; }
+.page-heading h2 { font-size: 22px; font-weight: 700; color: #1f2937; }
+.page-heading p  { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+/* ─── Card ────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.card-header {
+  padding: 20px 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-header__info h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-header__info p {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+.card-body { padding: 20px 24px 24px; }
+
+/* ─── Tour container (iframe + controles) ────────────────────────────── */
+.tour-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  background: #000;
+  /* altura proporcional — pode ajustar */
+  height: calc(100vh - 260px);
+  min-height: 480px;
+}
+.tour-card iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ─── Menu lateral (drawer) ─────────────────────────────────────────── */
+.tour-drawer {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100%;
+  width: 260px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  z-index: 199;
+  box-shadow: 6px 0 32px rgba(0,0,0,.16);
+  transform: translateX(-100%);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+}
+.tour-drawer.open { transform: translateX(0); }
+
+.tour-drawer__head {
+  background: linear-gradient(135deg, var(--ifam-green-dark), var(--ifam-green-mid));
+  padding: 72px 20px 22px;
+}
+.tour-drawer__head-institute {
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: .04em;
+}
+.tour-drawer__head-campus {
+  font-size: 11px;
+  color: rgba(255,255,255,.7);
+  margin-top: 2px;
+}
+
+.tour-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+.tour-drawer__section-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #9ca3af;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.tour-group-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 12px;
+  cursor: pointer;
+  margin-bottom: 4px;
+  transition: background .18s;
+  font-family: 'Open Sans', sans-serif;
+}
+.tour-group-btn:hover { background: var(--ifam-green-light); }
+.tour-group-btn span:first-child {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ifam-green-dark);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.tour-group-btn .chevron {
+  font-size: 13px;
+  color: var(--ifam-green);
+  transition: transform .2s;
+}
+.tour-group-btn .chevron.open { transform: rotate(90deg); }
+
+.tour-scene-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  padding: 9px 12px 9px 20px;
+  cursor: pointer;
+  text-align: left;
+  margin-bottom: 3px;
+  transition: all .18s;
+  font-family: 'Open Sans', sans-serif;
+}
+.tour-scene-btn:hover { background: #f3f4f6; }
+.tour-scene-btn.active {
+  background: var(--ifam-green-light);
+  border-color: var(--ifam-green);
+}
+.tour-scene-btn span {
+  font-size: 13px;
+  color: #374151;
+}
+.tour-scene-btn.active span { font-weight: 700; color: var(--ifam-green-dark); }
+
+.tour-drawer__foot {
+  padding: 12px 20px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #9ca3af;
+}
+.tour-drawer__foot-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--ifam-green);
+  flex-shrink: 0;
+}
+
+/* ─── Botão tela cheia (no card-header) ──────────────────────────────── */
+.tour-fullscreen-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--ifam-green);
+  background: #fff;
+  color: var(--ifam-green);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .18s, color .18s;
+  flex-shrink: 0;
+}
+.tour-fullscreen-btn:hover {
+  background: var(--ifam-green);
+  color: #fff;
+}
+
+/* ─── tour-card em fullscreen ocupa a tela toda ──────────────────────── */
+.tour-card:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  border: none;
+}
+/* garante que drawer e hambúrguer apareçam sobre o iframe em fullscreen */
+.tour-card:fullscreen .tour-menu-btn  { z-index: 9999; }
+.tour-card:fullscreen .tour-drawer    { z-index: 9998; }
+.tour-card:fullscreen .tour-overlay   { z-index: 9997; }
+
+/* ─── Botão hamburguer ────────────────────────────────────────────────── */
+.tour-menu-btn {
+  position: fixed;
+  top: 16px; left: 16px;
+  z-index: 200;
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: var(--ifam-green-dark);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.28);
+  transition: background .2s;
+}
+.tour-menu-btn:hover { background: var(--ifam-green); }
+.tour-menu-btn .bar {
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: width .2s;
+}
+
+/* ─── Overlay ─────────────────────────────────────────────────────────── */
+.tour-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 198;
+  background: rgba(0,0,0,.22);
+}
+
+/* ─── Splash ──────────────────────────────────────────────────────────── */
+.splash {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+}
+.splash__bg {
+  position: absolute;
+  inset: 0;
+  filter: blur(4px);
+  transform: scale(1.05);
+}
+.splash__bg iframe {
+  width: 100%; height: 100%;
+  border: none;
+  pointer-events: none;
+}
+.splash__dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 1;
+}
+.splash__center {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card do splash */
+.splash-card {
+  width: min(460px, 94vw);
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,.38);
+}
+.splash-card__hero {
+  background: linear-gradient(135deg, var(--ifam-green-dark) 0%, var(--ifam-green-mid) 55%, #6abf69 100%);
+  padding: 32px 28px 60px;
+  position: relative;
+  overflow: hidden;
+}
+.splash-card__hero::after {
+  content: '';
+  position: absolute;
+  bottom: -36px; left: -24px; right: -24px;
+  height: 72px;
+  background: #fff;
+  border-radius: 50%;
+}
+.splash-card__title {
+  color: #fff;
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.05;
+  margin: 20px 0 0;
+}
+.splash-card__sub {
+  color: rgba(255,255,255,.75);
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+.splash-card__rule {
+  width: 28px; height: 3px;
+  background: rgba(255,255,255,.5);
+  border-radius: 2px;
+  margin-top: 10px;
+}
+
+/* Info badge dentro do splash */
+.splash-badge {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 16px;
+  margin-top: -18px;
+  position: relative;
+  z-index: 2;
+}
+.splash-badge__icon {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--ifam-green-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.splash-badge__name {
+  font-weight: 700;
+  color: var(--ifam-green-dark);
+  font-size: 13px;
+}
+.splash-badge__campus {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+/* Dica de uso */
+.splash-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
+}
+.splash-hint__icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--ifam-green-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* Rodapé do splash */
+.splash-card__foot {
+  padding: 14px 16px 18px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.splash-card__logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ifam-flag {
+  display: grid;
+  grid-template-columns: repeat(3, 12px);
+  grid-template-rows: repeat(3, 12px);
+  gap: 3px;
+}
+.ifam-flag__cell { border-radius: 2px; }
+.ifam-flag__cell--red    { background: var(--ifam-red); }
+.ifam-flag__cell--green  { background: var(--ifam-green); }
+
+.splash-card__logo-text {
+  border-left: 2px solid #d1d5db;
+  padding-left: 10px;
+}
+.splash-card__logo-text strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #1f2937;
+  line-height: 1.2;
+}
+.splash-card__logo-text small {
+  font-size: 10px;
+  color: var(--muted);
+}
+.splash-card__logo-text em {
+  display: block;
+  font-size: 10px;
+  font-style: normal;
+  color: var(--ifam-green);
+  font-weight: 600;
+}
+
+.splash-enter-btn {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--ifam-green);
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, transform .15s;
+  box-shadow: 0 2px 8px rgba(47,158,65,.4);
+}
+.splash-enter-btn:hover {
+  background: var(--ifam-green-dark);
+  transform: scale(1.07);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   RESPONSIVIDADE MOBILE
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Viewport meta (garantir que o HTML tenha) ────────────────────── */
+/* (já deve estar no index.html, adicionado pela configuração do Vite)  */
+
+/* ─── Header mobile ─────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .ifam-header__inner {
+    padding: 10px 16px;
+    gap: 12px;
+  }
+  .ifam-header__logo {
+    height: 40px;
+  }
+  .ifam-header__divider {
+    padding-left: 12px;
+  }
+  .ifam-header__title {
+    font-size: 13px;
+  }
+  .ifam-header__institute {
+    font-size: 9px;
+  }
+}
+
+/* ─── Main / layout ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ifam-main {
+    padding: 16px 12px;
+  }
+  .page-heading {
+    margin-bottom: 16px;
+  }
+  .page-heading h2 {
+    font-size: 18px;
+  }
+  .page-heading p {
+    font-size: 12px;
+  }
+}
+
+/* ─── Card ────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .card-header {
+    padding: 14px 16px 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .card-header__info h3 {
+    font-size: 14px;
+  }
+  .card-body {
+    padding: 12px 16px 16px;
+  }
+  .tour-fullscreen-btn span {
+    display: none; /* esconde texto "Tela cheia", mantém só ícone */
+  }
+  .tour-fullscreen-btn {
+    padding: 7px 10px;
+  }
+}
+
+/* ─── Tour card (iframe) ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .tour-card {
+    height: calc(100vh - 220px);
+    min-height: 320px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tour-card {
+    height: calc(100vh - 200px);
+    min-height: 280px;
+    border-radius: 6px;
+  }
+}
+
+/* ─── Drawer lateral ─────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .tour-drawer {
+    width: 85vw;
+    max-width: 300px;
+  }
+  .tour-drawer__head {
+    padding: 64px 16px 18px;
+  }
+  .tour-drawer__body {
+    padding: 12px;
+  }
+}
+
+/* ─── Botão hambúrguer ───────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .tour-menu-btn {
+    top: 12px;
+    left: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+  }
+}
+
+/* ─── Splash ─────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .splash-card {
+    border-radius: 12px;
+  }
+  .splash-card__hero {
+    padding: 24px 20px 50px;
+  }
+  .splash-card__title {
+    font-size: 28px;
+    margin-top: 14px;
+  }
+  .splash-card__sub {
+    font-size: 13px;
+  }
+  .splash-badge {
+    margin: 0 12px;
+    margin-top: -14px;
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .splash-badge__icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+  .splash-badge__name {
+    font-size: 12px;
+  }
+  .splash-badge__campus {
+    font-size: 11px;
+  }
+  .splash-hint {
+    padding: 12px 14px;
+    font-size: 12px;
+    gap: 10px;
+  }
+  .splash-hint__icon {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+  .splash-card__foot {
+    padding: 12px 14px 16px;
+  }
+  .splash-card__logo-text strong {
+    font-size: 11px;
+  }
+  .splash-card__logo-text small,
+  .splash-card__logo-text em {
+    font-size: 9px;
+  }
+  .splash-enter-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+  }
+}
+
+/* ─── Hint: touch em vez de mouse no mobile ─────────────────────────── */
+@media (hover: none) and (pointer: coarse) {
+  .splash-hint .splash-hint__icon::after {
+    content: '👆';
+  }
+}
+
+/* ─── Evitar overflow horizontal ─────────────────────────────────────── */
+body {
+  overflow-x: hidden;
+}
