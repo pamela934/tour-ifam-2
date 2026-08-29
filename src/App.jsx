@@ -39,6 +39,7 @@ const grupos = [
       id: 'entrada-tecnologico',
       nome: 'Entrada - Centro Tecnológico',
       sceneId: '20260612_093642_788'
+      tourBase: 'https://tour.panoee.net/695bf5bbd9acedda1b757040'
     }
   ],
 
@@ -57,7 +58,7 @@ const grupos = [
         {
           id: 'lab-redes',
           nome: 'Lab de Redes',
-          sceneId: '20260318_222239_417s'
+          sceneId: '20260318-222239-417'
         },
 
         {
