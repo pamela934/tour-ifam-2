@@ -74,6 +74,18 @@ const grupos = [
         },
 
         {
+          id: 'IfMaker',
+          nome: 'Lab IFMaker',
+          sceneId: '20260601_192022_923'
+        },
+
+        {
+          id: 'Lab desenho técnico',
+          nome: 'Lab Desenho Técnico',
+          sceneId: '20260601_192435_278'
+        },
+
+        {
           id: 'copa',
           nome: 'Copa',
           sceneId: '20260312_132419_322'
