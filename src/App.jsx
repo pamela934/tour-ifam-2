@@ -38,7 +38,7 @@ const grupos = [
     {
       id: 'entrada-tecnologico',
       nome: 'Entrada - Centro Tecnológico',
-      sceneId: '20260612_093642_788',
+      sceneId: '6a2d70ff89e7dc4e6a7940fb',
       tourBase: 'https://tour.panoee.net/695bf5bbd9acedda1b757040'
     }
   ],
