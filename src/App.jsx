@@ -37,16 +37,17 @@ const grupos = [
   },
 
   {
-    id: 'veterinaria',
-    nome: 'Medicina Veterinária',
-    cenas: [
-      {
-        id: 1,
-        nome: 'Entrada - Medicina Veterinária',
-        sceneId: '20260512_153801_935'
-      }
-    ]
-  },
+  id: 'veterinaria',
+  nome: 'Medicina Veterinária',
+  cenas: [
+    {
+      id: 1,
+      nome: 'Entrada - Medicina Veterinária',
+      sceneId: '20260512_153801_935',
+      tourBase: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+    }
+  ]
+},
 
   {
     id: 'agroecologia',
@@ -250,7 +251,13 @@ export default function App() {
   const [abertos,    setAbertos]    = useState({})
 
   const toggleGrupo = (id) => setAbertos(prev => ({ ...prev, [id]: !prev[id] }))
-  const irParaCena  = (sceneId) => { setCenaAtiva(sceneId); setMenuAberto(false) }
+  const [tourAtual, setTourAtual] = useState(null)
+
+const irParaCena = (sceneId, tourBase = null) => {
+  setCenaAtiva(sceneId)
+  setTourAtual(tourBase)
+  setMenuAberto(false)
+}
 
   if (tela === 'splash' || tela === 'device') return (
     <SplashWrapper
@@ -260,7 +267,7 @@ export default function App() {
     />
   )
 
-  const tourBase = isDispositivoMovel() ? TOUR_BASE_MOBILE : TOUR_BASE_DESKTOP
+  const tourBase = tourAtual || (isDispositivoMovel() ? TOUR_BASE_MOBILE : TOUR_BASE_DESKTOP)
 
   return (
     <div className="tour-card">
@@ -307,7 +314,7 @@ export default function App() {
                 const ativo = cena.sceneId === cenaAtiva
                 return (
                   <button key={cena.id} className={`tour-scene-btn ${ativo ? 'active' : ''}`}
-                    onClick={() => irParaCena(cena.sceneId)}>
+                    onClick={() => irParaCena(cena.sceneId, cena.tourBase)}>
                     <span>{cena.nome}</span>
                     {ativo && <span style={{ color:'var(--ifam-green)', fontSize:16 }}>›</span>}
                   </button>
