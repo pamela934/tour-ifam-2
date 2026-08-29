@@ -334,7 +334,7 @@ const irParaCena = (sceneId, tourBase = null) => {
         w:{typeof window !== 'undefined' ? window.innerWidth : '?'}
       </div>
       <iframe
-        key={cenaAtiva}
+        key={`${tourBase}-${cenaAtiva}`}
         name="panoee-tour-embeded"
         src={`${tourBase}/${cenaAtiva}`}
         allow="vr; xr; accelerometer; gyroscope; autoplay"
