@@ -20,7 +20,18 @@ function isDispositivoMovel() {
 const grupos = [
   { id: 'entrada',     nome: 'Entrada principal',    cenas: [{ id: 1, nome: 'LAB_LOVELACE', sceneId: '20260517_155443_286' }] },
   { id: 'tecnologico', nome: 'Centro Tecnológico',   cenas: [] },
-  { id: 'veterinaria', nome: 'Medicina Veterinária', cenas: [{ id: 1, nome: 'Entrada - Medicina Veterinária', sceneId: '20260512_153801_935' }] },
+  {
+  id: 'veterinaria',
+  nome: 'Medicina Veterinária',
+  cenas: [
+    {
+      id: 1,
+      nome: 'Entrada - Medicina Veterinária',
+      sceneId: '20260512_153801_935',
+      tourBase: 'URL_DO_TOUR_DA_VETERINARIA'
+    }
+  ]
+}
   { id: 'agroecologia',nome: 'Agroecologia',         cenas: [{ id: 1, nome: 'LAB_LOVELACE', sceneId: '20260517_155443_286' }] },
   { id: 'agropecuaria',nome: 'Agropecuária',         cenas: [{ id: 1, nome: 'LAB_LOVELACE', sceneId: '20260517_155443_286' }] },
   { id: 'esportes',    nome: 'Área de esportes',     cenas: [{ id: 1, nome: 'LAB_LOVELACE', sceneId: '20260517_155443_286' }] },
