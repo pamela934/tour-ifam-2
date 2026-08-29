@@ -24,17 +24,58 @@ const grupos = [
     cenas: [
       {
         id: 1,
-        nome: 'LAB_LOVELACE',
-        sceneId: '20260517_155443_286'
+        nome: '',
+        sceneId: ''
       }
     ]
   },
 
   {
-    id: 'tecnologico',
-    nome: 'Centro Tecnológico',
-    cenas: []
-  },
+  id: 'tecnologico',
+  nome: 'Centro Tecnológico',
+
+  cenas: [
+    {
+      id: 'entrada-tecnologico',
+      nome: 'Entrada - Centro Tecnológico',
+      sceneId: CENA_INICIAL_DESKTOP
+    }
+  ],
+
+  subgrupos: [
+    {
+      id: 'laboratorios-tecnologico',
+      nome: 'Laboratórios',
+
+      cenas: [
+        {
+          id: 'lab-lovelace',
+          nome: 'Lab Lovelace',
+          sceneId: '20260517_155443_286'
+        },
+
+        {
+          id: 'lab-redes',
+          nome: 'Lab de Redes',
+          sceneId: 'COLOQUE_AQUI_ID_LAB_REDES'
+        },
+
+        {
+          id: 'lab-turing',
+          nome: 'Lab Turing',
+          sceneId: 'COLOQUE_AQUI_ID_LAB_TURING'
+        },
+
+        {
+          id: 'copa',
+          nome: 'Copa',
+          sceneId: 'COLOQUE_AQUI_ID_COPA'
+        }
+      ]
+    }
+  ]
+},
+
 
   {
   id: 'veterinaria',
@@ -249,11 +290,14 @@ export default function App() {
   const [tela,       setTela]       = useState('splash')
   const [cenaAtiva,  setCenaAtiva]  = useState(() => isDispositivoMovel() ? CENA_INICIAL_MOBILE : CENA_INICIAL_DESKTOP)
   const [abertos,    setAbertos]    = useState({})
+  const [subAbertos, setSubAbertos] = useState({})
 
   const toggleGrupo = (id) => setAbertos(prev => ({ ...prev, [id]: !prev[id] }))
+  const toggleSubgrupo = (id) => setSubAbertos(prev => ({ ...prev, [id]: !prev[id] }))
   const [tourAtual, setTourAtual] = useState(null)
 
 const irParaCena = (sceneId, tourBase = null) => {
+  if (!sceneId || sceneId.startsWith('COLOQUE_AQUI')) return
   setCenaAtiva(sceneId)
   setTourAtual(tourBase)
   setMenuAberto(false)
@@ -304,24 +348,87 @@ const irParaCena = (sceneId, tourBase = null) => {
         </div>
         <div className="tour-drawer__body">
           <p className="tour-drawer__section-label">Cenas disponíveis</p>
-          {grupos.map((grupo) => (
-            <div key={grupo.id}>
-              <button className="tour-group-btn" onClick={() => toggleGrupo(grupo.id)}>
-                <span>{grupo.nome}</span>
-                <span className={`chevron ${abertos[grupo.id] ? 'open' : ''}`}>›</span>
-              </button>
-              {abertos[grupo.id] && grupo.cenas.map((cena) => {
-                const ativo = cena.sceneId === cenaAtiva
-                return (
-                  <button key={cena.id} className={`tour-scene-btn ${ativo ? 'active' : ''}`}
-                    onClick={() => irParaCena(cena.sceneId, cena.tourBase)}>
-                    <span>{cena.nome}</span>
-                    {ativo && <span style={{ color:'var(--ifam-green)', fontSize:16 }}>›</span>}
-                  </button>
-                )
-              })}
-            </div>
-          ))}
+          {grupos
+            .filter((grupo) => !isDispositivoMovel() || grupo.id !== 'veterinaria')
+            .map((grupo) => (
+              <div key={grupo.id}>
+                <button className="tour-group-btn" onClick={() => toggleGrupo(grupo.id)}>
+                  <span>{grupo.nome}</span>
+                  <span className={`chevron ${abertos[grupo.id] ? 'open' : ''}`}>›</span>
+                </button>
+
+                {abertos[grupo.id] && (
+                  <>
+                    {grupo.cenas?.map((cena) => {
+                      const ativo = cena.sceneId === cenaAtiva
+                      const disponivel =
+                        Boolean(cena.sceneId) &&
+                        !cena.sceneId.startsWith('COLOQUE_AQUI')
+
+                      return (
+                        <button
+                          key={cena.id}
+                          className={`tour-scene-btn ${ativo ? 'active' : ''}`}
+                          onClick={() => irParaCena(cena.sceneId, cena.tourBase)}
+                          disabled={!disponivel}
+                          title={!disponivel ? 'Adicione o ID desta cena no App.jsx' : undefined}
+                          style={!disponivel ? { opacity: 0.55, cursor: 'not-allowed' } : undefined}
+                        >
+                          <span>{cena.nome || 'Cena sem nome'}</span>
+                          {disponivel && (
+                            <span style={{ color:'var(--ifam-green)', fontSize:16 }}>›</span>
+                          )}
+                        </button>
+                      )
+                    })}
+
+                    {grupo.subgrupos?.map((subgrupo) => (
+                      <div key={subgrupo.id}>
+                        <button
+                          className="tour-scene-btn"
+                          onClick={() => toggleSubgrupo(subgrupo.id)}
+                          style={{ fontWeight: 600 }}
+                        >
+                          <span>{subgrupo.nome}</span>
+                          <span className={`chevron ${subAbertos[subgrupo.id] ? 'open' : ''}`}>
+                            ›
+                          </span>
+                        </button>
+
+                        {subAbertos[subgrupo.id] &&
+                          subgrupo.cenas.map((cena) => {
+                            const ativo = cena.sceneId === cenaAtiva
+                            const disponivel =
+                              Boolean(cena.sceneId) &&
+                              !cena.sceneId.startsWith('COLOQUE_AQUI')
+
+                            return (
+                              <button
+                                key={cena.id}
+                                className={`tour-scene-btn ${ativo ? 'active' : ''}`}
+                                onClick={() => irParaCena(cena.sceneId, cena.tourBase)}
+                                disabled={!disponivel}
+                                title={!disponivel ? 'Adicione o ID desta cena no App.jsx' : undefined}
+                                style={{
+                                  paddingLeft: '38px',
+                                  ...(!disponivel
+                                    ? { opacity: 0.55, cursor: 'not-allowed' }
+                                    : {})
+                                }}
+                              >
+                                <span>{cena.nome}</span>
+                                {disponivel && (
+                                  <span style={{ color:'var(--ifam-green)', fontSize:16 }}>›</span>
+                                )}
+                              </button>
+                            )
+                          })}
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            ))}
         </div>
         <div className="tour-drawer__foot">
           <div className="tour-drawer__foot-dot" />
