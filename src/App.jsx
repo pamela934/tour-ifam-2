@@ -38,7 +38,7 @@ const grupos = [
     {
       id: 'entrada-tecnologico',
       nome: 'Entrada - Centro Tecnológico',
-      sceneId: CENA_INICIAL_DESKTOP
+      sceneId: '20260612_093642_788'
     }
   ],
 
@@ -57,19 +57,25 @@ const grupos = [
         {
           id: 'lab-redes',
           nome: 'Lab de Redes',
-          sceneId: 'COLOQUE_AQUI_ID_LAB_REDES'
+          sceneId: '20260318_222239_417s'
         },
 
         {
           id: 'lab-turing',
           nome: 'Lab Turing',
-          sceneId: 'COLOQUE_AQUI_ID_LAB_TURING'
+          sceneId: '20260517_155248_880'
+        },
+
+        {
+          id: 'TechThinkers',
+          nome: 'Lab TechThinkers',
+          sceneId: '20260318_221914_212'
         },
 
         {
           id: 'copa',
           nome: 'Copa',
-          sceneId: 'COLOQUE_AQUI_ID_COPA'
+          sceneId: '20260312_132419_322'
         }
       ]
     }
