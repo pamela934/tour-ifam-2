@@ -3,7 +3,7 @@ import './index.css'
 import panoCampus from './assets/20260601_112014_603.jpg'
 
 const TOUR_BASE_DESKTOP = 'https://tour.panoee.net/695bf5bbd9acedda1b757040'
-const TOUR_BASE_MOBILE  = 'https://tour.panoee.net/69c1a754ece2b7b1e84f6562'
+const TOUR_BASE_MOBILE  = 'https://tour.panoee.net/695bf5bbd9acedda1b757040'
 const CENA_INICIAL_DESKTOP = '20260517_144128_493'
 const CENA_INICIAL_MOBILE  = '20260612_093642_788'
 
