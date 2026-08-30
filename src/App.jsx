@@ -4,6 +4,8 @@ import panoCampus from './assets/20260601_112014_603.jpg'
 
 const TOUR_BASE_DESKTOP = 'https://tour.panoee.net/695bf5bbd9acedda1b757040'
 const TOUR_BASE_MOBILE  = 'https://tour.panoee.net/69c1a754ece2b7b1e84f6562'
+const TOUR_VETERINARIA_DESKTOP = 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+const TOUR_VETERINARIA_MOBILE = 'https://tour.panoee.net/6a938b0f44457b0acc6d3da2'
 const CENA_INICIAL_DESKTOP = '20260517_144128_493'
 const CENA_INICIAL_MOBILE  = '20260612_093642_788'
 
@@ -105,7 +107,9 @@ const grupos = [
       id: 1,
       nome: 'Entrada - Medicina Veterinária',
       sceneId: '20260512_153801_935',
-      tourBase: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+      tourBase: TOUR_VETERINARIA_DESKTOP,
+      sceneIdMobile: '20260415_144931_052-1',
+      tourBaseMobile: TOUR_VETERINARIA_MOBILE
     }
   ],
 
@@ -119,27 +123,31 @@ const grupos = [
           id: 'lab-anatomia',
           nome: 'Lab de Anatomia',
           sceneId: '20260428_210844_179',
-          tourBase: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+          tourBase: TOUR_VETERINARIA_DESKTOP,
+          sceneIdMobile: '',
+          tourBaseMobile: TOUR_VETERINARIA_MOBILE
         },
-
-
         {
           id: 'sala-de-aula',
           nome: 'Sala de Aula',
           sceneId: '',
-          tourBase: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+          tourBase: TOUR_VETERINARIA_DESKTOP,
+          sceneIdMobile: '',
+          tourBaseMobile: TOUR_VETERINARIA_MOBILE
         },
-
         {
           id: 'lab-microscopia',
           nome: 'Lab de Microscopia',
           sceneId: '20260428_210130_226',
-          tourBase: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+          tourBase: TOUR_VETERINARIA_DESKTOP,
+          sceneIdMobile: '',
+          tourBaseMobile: TOUR_VETERINARIA_MOBILE
         }
       ]
     }
   ]
 },
+
 
   {
     id: 'agroecologia',
@@ -347,6 +355,20 @@ export default function App() {
   const toggleSubgrupo = (id) => setSubAbertos(prev => ({ ...prev, [id]: !prev[id] }))
   const [tourAtual, setTourAtual] = useState(null)
 
+  const dadosDaCena = (cena) => {
+    if (isDispositivoMovel() && cena.sceneIdMobile) {
+      return {
+        sceneId: cena.sceneIdMobile,
+        tourBase: cena.tourBaseMobile || TOUR_VETERINARIA_MOBILE
+      }
+    }
+
+    return {
+      sceneId: cena.sceneId,
+      tourBase: cena.tourBase || null
+    }
+  }
+
 const irParaCena = (sceneId, tourBase = null) => {
   if (!sceneId || sceneId.startsWith('COLOQUE_AQUI')) return
   setCenaAtiva(sceneId)
@@ -399,9 +421,7 @@ const irParaCena = (sceneId, tourBase = null) => {
         </div>
         <div className="tour-drawer__body">
           <p className="tour-drawer__section-label">Cenas disponíveis</p>
-          {grupos
-            .filter((grupo) => !isDispositivoMovel() || grupo.id !== 'veterinaria')
-            .map((grupo) => (
+          {grupos.map((grupo) => (
               <div key={grupo.id}>
                 <button className="tour-group-btn" onClick={() => toggleGrupo(grupo.id)}>
                   <span>{grupo.nome}</span>
@@ -411,16 +431,17 @@ const irParaCena = (sceneId, tourBase = null) => {
                 {abertos[grupo.id] && (
                   <>
                     {grupo.cenas?.map((cena) => {
-                      const ativo = cena.sceneId === cenaAtiva
+                      const { sceneId, tourBase } = dadosDaCena(cena)
+                      const ativo = sceneId === cenaAtiva
                       const disponivel =
-                        Boolean(cena.sceneId) &&
-                        !cena.sceneId.startsWith('COLOQUE_AQUI')
+                        Boolean(sceneId) &&
+                        !sceneId.startsWith('COLOQUE_AQUI')
 
                       return (
                         <button
                           key={cena.id}
                           className={`tour-scene-btn ${ativo ? 'active' : ''}`}
-                          onClick={() => irParaCena(cena.sceneId, cena.tourBase)}
+                          onClick={() => irParaCena(sceneId, tourBase)}
                           disabled={!disponivel}
                           title={!disponivel ? 'Adicione o ID desta cena no App.jsx' : undefined}
                           style={!disponivel ? { opacity: 0.55, cursor: 'not-allowed' } : undefined}
@@ -448,16 +469,17 @@ const irParaCena = (sceneId, tourBase = null) => {
 
                         {subAbertos[subgrupo.id] &&
                           subgrupo.cenas.map((cena) => {
-                            const ativo = cena.sceneId === cenaAtiva
+                            const { sceneId, tourBase } = dadosDaCena(cena)
+                            const ativo = sceneId === cenaAtiva
                             const disponivel =
-                              Boolean(cena.sceneId) &&
-                              !cena.sceneId.startsWith('COLOQUE_AQUI')
+                              Boolean(sceneId) &&
+                              !sceneId.startsWith('COLOQUE_AQUI')
 
                             return (
                               <button
                                 key={cena.id}
                                 className={`tour-scene-btn ${ativo ? 'active' : ''}`}
-                                onClick={() => irParaCena(cena.sceneId, cena.tourBase)}
+                                onClick={() => irParaCena(sceneId, tourBase)}
                                 disabled={!disponivel}
                                 title={!disponivel ? 'Adicione o ID desta cena no App.jsx' : undefined}
                                 style={{
