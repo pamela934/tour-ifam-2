@@ -121,6 +121,15 @@ const grupos = [
           sceneId: '20260428_210844_179',
           tourBase: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
         },
+
+
+        {
+          id: 'sala-de-aula',
+          nome: 'Sala de Aula',
+          sceneId: '',
+          tourBase: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+        },
+
         {
           id: 'lab-microscopia',
           nome: 'Lab de Microscopia',
