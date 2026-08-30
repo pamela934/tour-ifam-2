@@ -99,12 +99,35 @@ const grupos = [
   {
   id: 'veterinaria',
   nome: 'Medicina Veterinária',
+
   cenas: [
     {
       id: 1,
       nome: 'Entrada - Medicina Veterinária',
       sceneId: '20260512_153801_935',
       tourBase: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+    }
+  ],
+
+  subgrupos: [
+    {
+      id: 'laboratorios-veterinaria',
+      nome: 'Laboratórios',
+
+      cenas: [
+        {
+          id: 'lab-anatomia',
+          nome: 'Lab de Anatomia',
+          sceneId: '20260428_210844_179',
+          tourBase: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+        },
+        {
+          id: 'lab-microscopia',
+          nome: 'Lab de Microscopia',
+          sceneId: '20260428_210130_226',
+          tourBase: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+        }
+      ]
     }
   ]
 },
