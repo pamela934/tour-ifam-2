@@ -170,9 +170,9 @@ const grupos = [
     nome: 'Área de esportes',
     cenas: [
       {
-        id: 1,
-        nome: 'LAB_LOVELACE',
-        sceneId: '20260517_155443_286'
+        id: 'campo',
+        nome: 'Campo e Pista de Corrida',
+        sceneId: '20260623_135754_526'
       }
     ]
   }
