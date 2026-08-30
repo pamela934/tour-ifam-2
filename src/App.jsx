@@ -85,7 +85,7 @@ const grupos = [
               tourBase: TOURS.desktop.principal
             },
             mobile: {
-              sceneId: '',
+              sceneId: '20260517_155443_286',
               tourBase: TOURS.mobile.principal
             }
           },
@@ -121,7 +121,7 @@ const grupos = [
               tourBase: TOURS.desktop.principal
             },
             mobile: {
-              sceneId: '',
+              sceneId: '20260318_221914_212',
               tourBase: TOURS.mobile.principal
             }
           },
@@ -145,7 +145,7 @@ const grupos = [
               tourBase: TOURS.desktop.principal
             },
             mobile: {
-              sceneId: '',
+              sceneId: '20260601_192435_278',
               tourBase: TOURS.mobile.principal
             }
           },
@@ -157,7 +157,7 @@ const grupos = [
               tourBase: TOURS.desktop.principal
             },
             mobile: {
-              sceneId: '',
+              sceneId: '20260312_132541_120',
               tourBase: TOURS.mobile.principal
             }
           }
