@@ -85,7 +85,7 @@ const grupos = [
               tourBase: TOURS.desktop.principal
             },
             mobile: {
-              sceneId: '20260517_155443_286',
+              sceneId: '20260517_155413_816',
               tourBase: TOURS.mobile.principal
             }
           },
