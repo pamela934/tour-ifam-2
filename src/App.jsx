@@ -2,13 +2,21 @@ import { useState, useEffect, useRef } from 'react'
 import './index.css'
 import panoCampus from './assets/20260601_112014_603.jpg'
 
-const TOUR_BASE_DESKTOP = 'https://tour.panoee.net/695bf5bbd9acedda1b757040'
-const TOUR_BASE_MOBILE  = 'https://tour.panoee.net/69c1a754ece2b7b1e84f6562'
-const TOUR_VETERINARIA_DESKTOP = 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
-const TOUR_VETERINARIA_MOBILE = 'https://tour.panoee.net/6a938b0f44457b0acc6d3da2'
-const CENA_INICIAL_DESKTOP = '20260517_144128_493'
-const CENA_INICIAL_MOBILE  = '20260612_093642_788'
+const TOURS = {
+  desktop: {
+    principal: 'https://tour.panoee.net/695bf5bbd9acedda1b757040',
+    veterinaria: 'https://tour.panoee.net/69dfe0e4cab90791b362e8e5'
+  },
+  mobile: {
+    principal: 'https://tour.panoee.net/69c1a754ece2b7b1e84f6562',
+    veterinaria: 'https://tour.panoee.net/6a938b0f44457b0acc6d3da2'
+  }
+}
 
+const CENAS_INICIAIS = {
+  desktop: '20260517_144128_493',
+  mobile: '20260612_093642_788'
+}
 
 function isDispositivoMovel() {
   if (typeof window === 'undefined') return false
@@ -19,144 +27,223 @@ function isDispositivoMovel() {
   )
 }
 
+/*
+  Cada cena agora tem DUAS configurações separadas:
+  desktop: { sceneId, tourBase }
+  mobile:  { sceneId, tourBase }
+
+  Quando você criar uma cena mobile nova, preencha SOMENTE o bloco mobile.
+  Quando criar/alterar uma cena desktop, mexa SOMENTE no bloco desktop.
+*/
 const grupos = [
   {
     id: 'entrada',
     nome: 'Entrada principal',
     cenas: [
       {
-        id: 1,
-        nome: '',
-        sceneId: ''
+        id: 'entrada-principal',
+        nome: 'Entrada principal',
+        desktop: {
+          sceneId: CENAS_INICIAIS.desktop,
+          tourBase: TOURS.desktop.principal
+        },
+        mobile: {
+          sceneId: CENAS_INICIAIS.mobile,
+          tourBase: TOURS.mobile.principal
+        }
       }
     ]
   },
 
   {
-  id: 'tecnologico',
-  nome: 'Centro Tecnológico',
-
-  cenas: [
-    {
-      id: 'entrada-tecnologico',
-      nome: 'Entrada - Centro Tecnológico',
-      sceneId: '6a2d70ff89e7dc4e6a7940fb',
-      tourBase: 'https://tour.panoee.net/695bf5bbd9acedda1b757040'
-    }
-  ],
-
-  subgrupos: [
-    {
-      id: 'laboratorios-tecnologico',
-      nome: 'Laboratórios',
-
-      cenas: [
-        {
-          id: 'lab-lovelace',
-          nome: 'Lab Lovelace',
-          sceneId: '20260517_155443_286'
+    id: 'tecnologico',
+    nome: 'Centro Tecnológico',
+    cenas: [
+      {
+        id: 'entrada-tecnologico',
+        nome: 'Entrada - Centro Tecnológico',
+        desktop: {
+          sceneId: '6a2d70ff89e7dc4e6a7940fb',
+          tourBase: TOURS.desktop.principal
         },
-
-        {
-          id: 'lab-redes',
-          nome: 'Lab de Redes',
-          sceneId: '20260318-222239-417'
-        },
-
-        {
-          id: 'lab-turing',
-          nome: 'Lab Turing',
-          sceneId: '20260517_155248_880'
-        },
-
-        {
-          id: 'TechThinkers',
-          nome: 'Lab TechThinkers',
-          sceneId: '20260318_221914_212'
-        },
-
-        {
-          id: 'IfMaker',
-          nome: 'Lab IFMaker',
-          sceneId: '20260601_192022_923'
-        },
-
-        {
-          id: 'Lab desenho técnico',
-          nome: 'Lab Desenho Técnico',
-          sceneId: '20260601_192435_278'
-        },
-
-        {
-          id: 'copa',
-          nome: 'Copa',
-          sceneId: '20260312_132419_322'
+        mobile: {
+          sceneId: '20260612_093642_788',
+          tourBase: TOURS.mobile.principal
         }
-      ]
-    }
-  ]
-},
-
+      }
+    ],
+    subgrupos: [
+      {
+        id: 'laboratorios-tecnologico',
+        nome: 'Laboratórios',
+        cenas: [
+          {
+            id: 'lab-lovelace',
+            nome: 'Lab Lovelace',
+            desktop: {
+              sceneId: '20260517_155443_286',
+              tourBase: TOURS.desktop.principal
+            },
+            mobile: {
+              sceneId: '',
+              tourBase: TOURS.mobile.principal
+            }
+          },
+          {
+            id: 'lab-redes',
+            nome: 'Lab de Redes',
+            desktop: {
+              sceneId: '20260318-222239-417',
+              tourBase: TOURS.desktop.principal
+            },
+            mobile: {
+              sceneId: '',
+              tourBase: TOURS.mobile.principal
+            }
+          },
+          {
+            id: 'lab-turing',
+            nome: 'Lab Turing',
+            desktop: {
+              sceneId: '20260517_155248_880',
+              tourBase: TOURS.desktop.principal
+            },
+            mobile: {
+              sceneId: '20260517_155248_880',
+              tourBase: TOURS.mobile.principal
+            }
+          },
+          {
+            id: 'techthinkers',
+            nome: 'Lab TechThinkers',
+            desktop: {
+              sceneId: '20260318_221914_212',
+              tourBase: TOURS.desktop.principal
+            },
+            mobile: {
+              sceneId: '',
+              tourBase: TOURS.mobile.principal
+            }
+          },
+          {
+            id: 'ifmaker',
+            nome: 'Lab IFMaker',
+            desktop: {
+              sceneId: '20260601_192022_923',
+              tourBase: TOURS.desktop.principal
+            },
+            mobile: {
+              sceneId: '20260601_192022_923',
+              tourBase: TOURS.mobile.principal
+            }
+          },
+          {
+            id: 'lab-desenho-tecnico',
+            nome: 'Lab Desenho Técnico',
+            desktop: {
+              sceneId: '20260601_192435_278',
+              tourBase: TOURS.desktop.principal
+            },
+            mobile: {
+              sceneId: '',
+              tourBase: TOURS.mobile.principal
+            }
+          },
+          {
+            id: 'copa',
+            nome: 'Copa',
+            desktop: {
+              sceneId: '20260312_132419_322',
+              tourBase: TOURS.desktop.principal
+            },
+            mobile: {
+              sceneId: '',
+              tourBase: TOURS.mobile.principal
+            }
+          }
+        ]
+      }
+    ]
+  },
 
   {
-  id: 'veterinaria',
-  nome: 'Medicina Veterinária',
-
-  cenas: [
-    {
-      id: 1,
-      nome: 'Entrada - Medicina Veterinária',
-      sceneId: '20260512_153801_935',
-      tourBase: TOUR_VETERINARIA_DESKTOP,
-      sceneIdMobile: '20260415_144931_052-1',
-      tourBaseMobile: TOUR_VETERINARIA_MOBILE
-    }
-  ],
-
-  subgrupos: [
-    {
-      id: 'laboratorios-veterinaria',
-      nome: 'Laboratórios',
-
-      cenas: [
-        {
-          id: 'lab-anatomia',
-          nome: 'Lab de Anatomia',
-          sceneId: '20260428_210844_179',
-          tourBase: TOUR_VETERINARIA_DESKTOP,
-          sceneIdMobile: '',
-          tourBaseMobile: TOUR_VETERINARIA_MOBILE
+    id: 'veterinaria',
+    nome: 'Medicina Veterinária',
+    cenas: [
+      {
+        id: 'entrada-veterinaria',
+        nome: 'Entrada - Medicina Veterinária',
+        desktop: {
+          sceneId: '20260512_153801_935',
+          tourBase: TOURS.desktop.veterinaria
         },
-        {
-          id: 'sala-de-aula',
-          nome: 'Sala de Aula',
-          sceneId: '',
-          tourBase: TOUR_VETERINARIA_DESKTOP,
-          sceneIdMobile: '',
-          tourBaseMobile: TOUR_VETERINARIA_MOBILE
-        },
-        {
-          id: 'lab-microscopia',
-          nome: 'Lab de Microscopia',
-          sceneId: '20260428_210130_226',
-          tourBase: TOUR_VETERINARIA_DESKTOP,
-          sceneIdMobile: '',
-          tourBaseMobile: TOUR_VETERINARIA_MOBILE
+        mobile: {
+          sceneId: '20260415_144931_052-1',
+          tourBase: TOURS.mobile.veterinaria
         }
-      ]
-    }
-  ]
-},
-
+      }
+    ],
+    subgrupos: [
+      {
+        id: 'laboratorios-veterinaria',
+        nome: 'Laboratórios',
+        cenas: [
+          {
+            id: 'lab-anatomia',
+            nome: 'Lab de Anatomia',
+            desktop: {
+              sceneId: '20260428_210844_179',
+              tourBase: TOURS.desktop.veterinaria
+            },
+            mobile: {
+              sceneId: '',
+              tourBase: TOURS.mobile.veterinaria
+            }
+          },
+          {
+            id: 'sala-de-aula',
+            nome: 'Sala de Aula',
+            desktop: {
+              sceneId: '',
+              tourBase: TOURS.desktop.veterinaria
+            },
+            mobile: {
+              sceneId: '',
+              tourBase: TOURS.mobile.veterinaria
+            }
+          },
+          {
+            id: 'lab-microscopia',
+            nome: 'Lab de Microscopia',
+            desktop: {
+              sceneId: '20260428_210130_226',
+              tourBase: TOURS.desktop.veterinaria
+            },
+            mobile: {
+              sceneId: '',
+              tourBase: TOURS.mobile.veterinaria
+            }
+          }
+        ]
+      }
+    ]
+  },
 
   {
     id: 'agroecologia',
     nome: 'Agroecologia',
     cenas: [
       {
-        id: 1,
+        id: 'agroecologia-1',
         nome: 'LAB_LOVELACE',
-        sceneId: '20260517_155443_286'
+        desktop: {
+          sceneId: '20260517_155443_286',
+          tourBase: TOURS.desktop.principal
+        },
+        mobile: {
+          sceneId: '',
+          tourBase: TOURS.mobile.principal
+        }
       }
     ]
   },
@@ -166,21 +253,35 @@ const grupos = [
     nome: 'Agropecuária',
     cenas: [
       {
-        id: 1,
+        id: 'agropecuaria-1',
         nome: 'LAB_LOVELACE',
-        sceneId: '20260517_155443_286'
+        desktop: {
+          sceneId: '20260517_155443_286',
+          tourBase: TOURS.desktop.principal
+        },
+        mobile: {
+          sceneId: '',
+          tourBase: TOURS.mobile.principal
+        }
       }
     ]
   },
 
   {
     id: 'esportes',
-    nome: 'Área de esportes',
+    nome: 'Área Esportiva',
     cenas: [
       {
         id: 'campo',
         nome: 'Campo e Pista de Corrida',
-        sceneId: '20260623_135754_526'
+        desktop: {
+          sceneId: '20260623_135754_526',
+          tourBase: TOURS.desktop.principal
+        },
+        mobile: {
+          sceneId: '',
+          tourBase: TOURS.mobile.principal
+        }
       }
     ]
   }
@@ -345,46 +446,50 @@ function SplashWrapper({ tela, onEntrar, onContinuar }) {
 
 /* ── App principal ───────────────────────────────────────────────────── */
 export default function App() {
+  const dispositivoDetectado = isDispositivoMovel() ? 'mobile' : 'desktop'
+
   const [menuAberto, setMenuAberto] = useState(false)
-  const [tela,       setTela]       = useState('splash')
-  const [cenaAtiva,  setCenaAtiva]  = useState(() => isDispositivoMovel() ? CENA_INICIAL_MOBILE : CENA_INICIAL_DESKTOP)
-  const [abertos,    setAbertos]    = useState({})
+  const [tela, setTela] = useState('splash')
+  const [tipoDispositivo, setTipoDispositivo] = useState(dispositivoDetectado)
+  const [cenaAtiva, setCenaAtiva] = useState(CENAS_INICIAIS[dispositivoDetectado])
+  const [tourAtual, setTourAtual] = useState(TOURS[dispositivoDetectado].principal)
+  const [abertos, setAbertos] = useState({})
   const [subAbertos, setSubAbertos] = useState({})
 
   const toggleGrupo = (id) => setAbertos(prev => ({ ...prev, [id]: !prev[id] }))
   const toggleSubgrupo = (id) => setSubAbertos(prev => ({ ...prev, [id]: !prev[id] }))
-  const [tourAtual, setTourAtual] = useState(null)
 
   const dadosDaCena = (cena) => {
-    if (isDispositivoMovel() && cena.sceneIdMobile) {
-      return {
-        sceneId: cena.sceneIdMobile,
-        tourBase: cena.tourBaseMobile || TOUR_VETERINARIA_MOBILE
-      }
-    }
-
+    const dados = cena[tipoDispositivo] || {}
     return {
-      sceneId: cena.sceneId,
-      tourBase: cena.tourBase || null
+      sceneId: dados.sceneId || '',
+      tourBase: dados.tourBase || TOURS[tipoDispositivo].principal
     }
   }
 
-const irParaCena = (sceneId, tourBase = null) => {
-  if (!sceneId || sceneId.startsWith('COLOQUE_AQUI')) return
-  setCenaAtiva(sceneId)
-  setTourAtual(tourBase)
-  setMenuAberto(false)
-}
+  const irParaCena = (sceneId, tourBase) => {
+    if (!sceneId || sceneId.startsWith('COLOQUE_AQUI')) return
+    setCenaAtiva(sceneId)
+    setTourAtual(tourBase || TOURS[tipoDispositivo].principal)
+    setMenuAberto(false)
+  }
+
+  const entrarNoTour = (tipo) => {
+    setTipoDispositivo(tipo)
+    setCenaAtiva(CENAS_INICIAIS[tipo])
+    setTourAtual(TOURS[tipo].principal)
+    setTela('tour')
+  }
 
   if (tela === 'splash' || tela === 'device') return (
     <SplashWrapper
       tela={tela}
       onEntrar={() => setTela('device')}
-      onContinuar={() => setTela('tour')}
+      onContinuar={entrarNoTour}
     />
   )
 
-  const tourBase = tourAtual || (isDispositivoMovel() ? TOUR_BASE_MOBILE : TOUR_BASE_DESKTOP)
+  const tourBase = tourAtual || TOURS[tipoDispositivo].principal
 
   return (
     <div className="tour-card">
@@ -394,7 +499,7 @@ const irParaCena = (sceneId, tourBase = null) => {
         padding: '6px 10px', borderRadius: 6, fontFamily: 'monospace',
         maxWidth: 260, lineHeight: 1.4,
       }}>
-        {isDispositivoMovel() ? 'MOBILE' : 'DESKTOP'}<br />
+        {tipoDispositivo.toUpperCase()}<br />
         touch:{typeof navigator !== 'undefined' ? navigator.maxTouchPoints : '?'}{' '}
         coarse:{typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches ? '1' : '0'}{' '}
         w:{typeof window !== 'undefined' ? window.innerWidth : '?'}
