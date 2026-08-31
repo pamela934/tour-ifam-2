@@ -220,7 +220,7 @@ const grupos = [
               tourBase: TOURS.desktop.veterinaria
             },
             mobile: {
-              sceneId: '',
+              sceneId: '20260428_205612_207',
               tourBase: TOURS.mobile.veterinaria
             }
           }
